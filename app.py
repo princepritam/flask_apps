@@ -26,7 +26,7 @@ def add_book():
         )
         db.session.add(book)
         db.session.commit()
-        return "Book added. book id={}".format(book.id)
+        return "Book is added. book id={}".format(book.id)
     except Exception as e:
 	    return(str(e))
 
