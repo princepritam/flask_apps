@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            var error = {{ error }}
+        </script>
+        <style>
+            body {
+                background-color: lightblue;
+            }
+
+            h1 {
+                padding-top: 350px;
+                color: black;
+                text-align: center;
+            }
+            p {
+                color: red;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Following error/errors occured: </h1>
+        <p>{{error}}</p>
+    </body>
+</html>

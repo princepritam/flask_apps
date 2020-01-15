@@ -9,59 +9,48 @@ main = Blueprint('user', __name__)
 
 Session = sessionmaker(bind=engine)
 
-@main.route('/')
-def home():
-	# code.interact(local=dict(globals(), **locals()))
-	if not session.get('logged_in'):
-		return render_template('signup.html')
-	else:
-		# return "Hello Boss! <a href="/logout">Logout</a>"
-		return  "hello"
-		pass
+@main.route('/accounts/signup')
+def signup():
+	return render_template('signup.html')
 
-@main.route('/accounts/signup', methods=['POST'])
+@main.route('/signup', methods=['POST'])
 def create_user():
 	create_params = request.form
 	try:
 		user = User(
-				create_params['first_name'],
-				create_params['last_name'],
-				create_params['email'],
-				create_params['password'])
+				first_name=create_params['first_name'],
+				last_name=create_params['last_name'],
+				email=create_params['email'],
+				phone_number=create_params['phone_number'],
+				password=create_params['password'])
 		db_session.add(user)
 		db_session.commit()
+		return render_template('welcome.html', name= user.first_name)
 	except Exception as e:
-		return jsonify({"message": str(e)}), 422
-	return jsonify({"message": "User created successfully."}), 201
-
-@main.route('/accounts/login', methods=['POST'])
-def login():
-	login_params = request.form
-	try:
 		# code.interact(local=dict(globals(), **locals()))
-		if not session.get('logged_in'):
+		return render_template('error.html', error=str(e.args[0]))
+
+@main.route('/accounts/login', methods=['GET', 'POST'])
+def login_user():
+	if request.method == 'GET':
+		return render_template("login.html")
+	else:
+		try:
+			login_params = request.form
 			email = login_params["email"]
 			password = login_params["password"]
 			session_instance = Session()
-			is_user_present = session_instance.query(User).filter(User.email == email, User.password == password).first()
+			is_user_present = False
+			fetch_details = session_instance.query(User.email, User.first_name).filter(User.email.in_([ email]), User.password.in_([password])).first()
+			# code.interact(local=dict(globals(), **locals()))
+			if fetch_details :
+				is_user_present = True if (fetch_details[0] == email) else False
 			if is_user_present:
-				session['logged_in'] = True
+				return render_template('welcome.html', name = fetch_details[1])
 			else:
-				session['logged_in'] = False
-				flash("Invalid email or password.")
-				return home()
-				# raise Exception("Invalid email or password.")
-		else:
-			raise Exception("User already logged in.")
-		
-	except Exception as e:
-		return jsonify({"message": str(e)}), 422
-	return jsonify({"message": "User successfully logged in."}), 201
-
-@main.route('/accounts/logout')
-def logout():
-	session['logged_in'] = False
-	return jsonify({"message": "Successfully logged out."})
+				raise Exception("Invalid email or password.")
+		except Exception as e:
+			return render_template('error.html', error=str(e))
 
 
 @main.route('/users', methods=['GET'])
@@ -73,5 +62,6 @@ def get_all_users():
 				"id": user.id,
 				"first_name": user.first_name,
 				"last_name": user.last_name,
-				"email": user.email})
+				"email": user.email,
+				"password":user.password})
 	return jsonify({"users": users_list})

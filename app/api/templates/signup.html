@@ -1,33 +1,119 @@
-<link rel="stylesheet" href="static/style.css" type="text/css">
-<form action="/accounts/signup" method="POST">
-	<div class="SignUp">
-		<div class="login-screen">
-			<div class="app-title">
-				<h1>Sign Up</h1>
+<html>
+	<head>
+		<style>	
+			* {
+				box-sizing: border-box;
+			}
+
+			*:focus {
+				outline: none;
+			}
+			body {
+				font-family: Arial;
+				background-color: #3498DB;
+				padding: 50px;
+			}
+			.login {
+				margin: 20px auto;
+				width: 300px;
+			}
+			.signup-screen {
+				background-color: #FFF;
+				padding: 20px;
+				border-radius: 5px
+			}
+
+			.app-title {
+				text-align: center;
+				color: #777;
+			}
+
+			.signup_form {
+				text-align: center;
+			}
+			.control-group {
+				margin-bottom: 10px;
+			}
+
+			input {
+				text-align: center;
+				background-color: #ECF0F1;
+				border: 2px solid transparent;
+				border-radius: 3px;
+				font-size: 16px;
+				font-weight: 200;
+				padding: 10px 0;
+				width: 250px;
+				transition: border .5s;
+			}
+
+			input:focus {
+				border: 2px solid #3498DB;
+				box-shadow: none;
+			}
+
+			.btn {
+				border: 2px solid transparent;
+				background: #3498DB;
+				color: #ffffff;
+				font-size: 16px;
+				line-height: 25px;
+				padding: 10px 0;
+				text-decoration: none;
+				text-shadow: none;
+				border-radius: 3px;
+				box-shadow: none;
+				transition: 0.25s;
+				display: block;
+				width: 250px;
+				margin: 0 auto;
+			}
+
+			.btn:hover {
+				background-color: #2980B9;
+			}
+
+			.login-link {
+				font-size: 12px;
+				color: #444;
+				display: block;
+				margin-top: 12px;
+			}
+
+		</style>
+	</head>
+	<body>	
+		<form action="/signup" method="POST">
+			<div class="SignUp">
+				<div class="signup-screen">
+					<div class="app-title">
+						<h1>Sign Up</h1>
+					</div>
+					<div class="signup_form">
+						<div class="control-group">
+							<input type="text" class="signup-field" value="" placeholder="First name" name="first_name">
+							<label class="signup-field-icon fui-user" for="signup-name"></label>
+						</div>
+						<div class="control-group">
+							<input type="text" class="signup-field" value="" placeholder="Last name" name="last_name">
+							<label class="signup-field-icon fui-user" for="signup-name"></label>
+						</div>
+						<div class="control-group">
+							<input type="text" class="signup-field" value="" placeholder="Email" name="email">
+							<label class="signup-field-icon fui-user" for="signup-email"></label>
+						</div>
+						<div class="control-group">
+							<input type="text" class="signup-field" value="" placeholder="Phone number" name="phone_number">
+							<label class="signup-field-icon fui-user" for="signup-phone_number"></label>
+						</div>
+						<div class="control-group">
+							<input type="password" class="signup-field" value="" placeholder="Password" name="password">
+							<label class="signup-field-icon fui-lock" for="signup-pass"></label>
+						</div>
+						<input type="submit" value="Sign up" class="btn btn-primary btn-large btn-block">
+					</div>
+				</div>
 			</div>
-			<div class="login-form">
-				<div class="control-group">
-					<input type="text" class="login-field" value="" placeholder="First name" name="first_name">
-					<label class="login-field-icon fui-user" for="login-name"></label>
-				</div>
-				<div class="control-group">
-					<input type="text" class="login-field" value="" placeholder="Last name" name="last_name">
-					<label class="login-field-icon fui-user" for="login-name"></label>
-				</div>
-				<div class="control-group">
-					<input type="text" class="login-field" value="" placeholder="Email" name="email">
-					<label class="login-field-icon fui-user" for="login-name"></label>
-				</div>
-				<div class="control-group">
-					<input type="text" class="login-field" value="" placeholder="Phone number" name="phone_number">
-					<label class="login-field-icon fui-user" for="login-name"></label>
-				</div>
-				<div class="control-group">
-					<input type="password" class="login-field" value="" placeholder="Password" name="password">
-					<label class="login-field-icon fui-lock" for="login-pass"></label>
-				</div>
-				<input type="submit" value="Sign up" class="btn btn-primary btn-large btn-block">
-			</div>
-		</div>
-	</div>
-</form>
+		</form>
+	</body>
+</html>
